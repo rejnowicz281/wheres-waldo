@@ -4,17 +4,14 @@ import { getScores } from "../../helpers/API";
 import { secondsToTime } from "../../helpers/utils";
 import { scorePropType } from "../propTypes";
 
-function Leaderboard({ mapId, initialScores, scoreAchieved, scoreIsSent }) {
+function Leaderboard({ mapId, initialScores, scoreIsSent }) {
     const [scores, setScores] = useState(initialScores);
 
     useEffect(() => {
         if (scoreIsSent) {
-            const lastScore = scores[scores.length - 1];
-            if (lastScore && lastScore.seconds > scoreAchieved) {
-                getScores(mapId).then((res) => {
-                    setScores(res.data.scores);
-                });
-            }
+            getScores(mapId).then((res) => {
+                setScores(res.data.scores);
+            });
         }
     }, [scoreIsSent]);
 
@@ -36,7 +33,6 @@ function Leaderboard({ mapId, initialScores, scoreAchieved, scoreIsSent }) {
 Leaderboard.propTypes = {
     mapId: PropTypes.string.isRequired,
     initialScores: PropTypes.arrayOf(scorePropType),
-    scoreAchieved: PropTypes.number.isRequired,
     scoreIsSent: PropTypes.bool.isRequired,
 };
 

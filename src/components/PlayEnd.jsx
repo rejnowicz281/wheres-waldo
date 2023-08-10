@@ -12,7 +12,7 @@ function PlayEnd({ mapId, scores, seconds }) {
         <div className="PlayEnd">
             <h2>You found everyone in {secondsToTime(seconds)}!</h2>
             <ScoreSender mapId={mapId} seconds={seconds} scoreIsSent={scoreIsSent} setscoreIsSent={setscoreIsSent} />
-            <Leaderboard mapId={mapId} scoreAchieved={seconds} initialScores={scores} scoreIsSent={scoreIsSent} />
+            <Leaderboard mapId={mapId} initialScores={scores} scoreIsSent={scoreIsSent} />
         </div>
     );
 }
