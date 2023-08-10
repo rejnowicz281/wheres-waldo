@@ -2,20 +2,16 @@ if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
 // const rateLimit = require("express-rate-limit");
 const compression = require("compression");
-const debug = require("debug");
+const debug = require("debug")("app:db");
 const express = require("express");
 const helmet = require("helmet");
 const createError = require("http-errors");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-// const mapRouter = require("./routes/maps");
-// const characterRouter = require("./routes/characters");
-// const scoreRouter = require("./routes/scores");
+const mapRouter = require("./routes/maps");
 
 const app = express();
-
-const logger = debug("app:db");
 
 // connect to mongodb && listen for requests
 const URI = process.env.MONGOD_URI;
@@ -25,11 +21,11 @@ mongoose
     .then(() => {
         const server = app.listen(3000);
 
-        logger("Connected to DB");
-        logger(server.address());
+        debug("Connected to DB");
+        debug(server.address());
     })
     .catch((err) => {
-        logger(err);
+        debug(err);
     });
 
 // middleware and static files
@@ -49,9 +45,7 @@ app.use(express.urlencoded({ extended: false }));
 app.get("/", (req, res) => {
     res.redirect("/maps");
 });
-// app.use("/maps", mapRouter);
-// app.use("/characters", characterRouter);
-// app.use("/scores", scoreRouter);
+app.use("/maps", mapRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -60,7 +54,7 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
-    logger(err);
+    debug(err);
 
     let error = { message: err.message, status: err.status };
 
