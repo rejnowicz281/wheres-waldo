@@ -20,7 +20,7 @@ function PlayEnd({ mapId, scores, seconds }) {
 }
 
 PlayEnd.propTypes = {
-    mapId: PropTypes.number.isRequired,
+    mapId: PropTypes.string.isRequired,
     scores: PropTypes.arrayOf(scorePropType),
     seconds: PropTypes.number.isRequired,
 };
