@@ -26,6 +26,17 @@ function MapPlay() {
             .catch((error) => console.log(error));
     }, []);
 
+    // start timer
+    useEffect(() => {
+        if (map) {
+            timerInterval.current = setInterval(() => {
+                setTimer((timer) => timer + 1);
+            }, 1000);
+
+            return () => stopTimer();
+        }
+    }, [map]);
+
     function setFound(characterName) {
         setCharactersFound([...charactersFound, characterName]);
     }
