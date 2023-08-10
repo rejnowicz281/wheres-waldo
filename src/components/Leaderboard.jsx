@@ -8,7 +8,7 @@ function Leaderboard({ mapId, initialScores, scoreAchieved, scoreIsSent }) {
     const [scores, setScores] = useState(initialScores);
 
     useEffect(() => {
-        if (scoreIsSent && scoreAchieved < scores[2].seconds) {
+        if (scoreIsSent && scores.length > 2 && scoreAchieved < scores[2].seconds) {
             getScores(mapId).then((res) => {
                 setScores(res.data.scores);
             });
@@ -30,7 +30,7 @@ function Leaderboard({ mapId, initialScores, scoreAchieved, scoreIsSent }) {
 }
 
 Leaderboard.propTypes = {
-    mapId: PropTypes.number.isRequired,
+    mapId: PropTypes.string.isRequired,
     initialScores: PropTypes.arrayOf(scorePropType),
     scoreAchieved: PropTypes.number.isRequired,
     scoreIsSent: PropTypes.bool.isRequired,
