@@ -3,9 +3,9 @@ import { BrowserRouter, Link, Navigate, Route, Routes } from "react-router-dom";
 function App() {
     return (
         <BrowserRouter>
-            <nav className="text-center">
+            <header>
                 <Link to="/wheres-waldo/maps">Where&apos;s Waldo?</Link>
-            </nav>
+            </header>
             <Routes>
                 <Route path="/*" element={<Navigate to="/wheres-waldo/maps" />} />
                 <Route path="/wheres-waldo/maps" />

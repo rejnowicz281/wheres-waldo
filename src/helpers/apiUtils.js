@@ -6,7 +6,7 @@ const api = axios.create({
     baseURL: API_URL,
 });
 
-async function getMapsData() {
+export async function getMaps() {
     try {
         const response = await api.get(`/maps`);
         return response;
@@ -15,7 +15,7 @@ async function getMapsData() {
     }
 }
 
-async function sendScore(map_id, score) {
+export async function sendScore(map_id, score) {
     try {
         const response = await api.post(`/maps/${map_id}/scores`, score);
         return response;
@@ -24,7 +24,7 @@ async function sendScore(map_id, score) {
     }
 }
 
-async function getScoresData(map_id) {
+export async function getScores(map_id) {
     try {
         const response = await api.get(`/maps/${map_id}/scores`);
         return response;
@@ -32,5 +32,3 @@ async function getScoresData(map_id) {
         return error.response;
     }
 }
-
-export { getMapsData, getScoresData, sendScore };
