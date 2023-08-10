@@ -1,24 +1,22 @@
 import PropTypes from "prop-types";
 
-const characterPropType = PropTypes.shape({
-    _id: PropTypes.number.isRequired,
+export const characterPropType = PropTypes.shape({
+    _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
 });
 
-const scorePropType = PropTypes.shape({
-    _id: PropTypes.number.isRequired,
-    player_name: PropTypes.string.isRequired,
+export const scorePropType = PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    playerName: PropTypes.string.isRequired,
     seconds: PropTypes.number.isRequired,
 });
 
-const mapPropType = PropTypes.shape({
-    _id: PropTypes.number.isRequired,
+export const mapPropType = PropTypes.shape({
+    _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    image_url: PropTypes.string.isRequired,
-    characters: PropTypes.arrayOf(characterPropType),
-    scores: PropTypes.arrayOf(scorePropType),
+    imgUrl: PropTypes.string.isRequired,
+    characters: PropTypes.arrayOf(characterPropType).isRequired,
+    scores: PropTypes.arrayOf(scorePropType).isRequired,
 });
-
-export { characterPropType, mapPropType, scorePropType };
