@@ -11,6 +11,10 @@ body {
     color: rgb(62, 199, 62);
 }
 
+.no-marker {
+    list-style-type: none;
+}
+
 .MapPlay,
 .MapShowcase {
     display: flex;
