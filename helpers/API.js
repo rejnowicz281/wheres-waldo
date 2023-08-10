@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http//localhost:3000/";
+const API_URL = "http://localhost:3000";
 
 const api = axios.create({
     baseURL: API_URL,
@@ -9,6 +9,15 @@ const api = axios.create({
 export async function getMaps() {
     try {
         const response = await api.get(`/maps`);
+        return response;
+    } catch (error) {
+        return error.response;
+    }
+}
+
+export async function getMap(map_id) {
+    try {
+        const response = await api.get(`/maps/${map_id}`);
         return response;
     } catch (error) {
         return error.response;
