@@ -13,9 +13,12 @@ exports.index = asyncHandler(async (req, res) => {
 
 exports.show = asyncHandler(async (req, res, next) => {
     const id = req.params.id;
+
     const map = await Map.findById(id);
 
     if (!map) return next(new Error("Map not found"));
+
+    map.scores.sort((a, b) => a.seconds - b.seconds);
 
     const data = {
         message: "Map Show successful",
