@@ -1,29 +1,42 @@
 const debug = require("debug")("app:scoresController");
 
+const { body, validationResult } = require("express-validator");
+
 const { Score } = require("../models/score");
 const Map = require("../models/map");
 
 const asyncHandler = require("../asyncHandler");
 
-exports.create = asyncHandler(async (req, res, next) => {
-    const mapId = req.params.mapId;
+exports.create = [
+    body("playerName").optional({ checkFalsy: true }).isString().trim().escape(),
+    body("seconds", "Seconds are required").isNumeric(),
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req);
 
-    const score = new Score(req.body);
+        if (!errors.isEmpty()) {
+            debug(errors.array());
+            return res.status(422).json({ errors: errors.array() });
+        }
 
-    const map = await Map.findById(mapId);
+        const mapId = req.params.mapId;
 
-    if (!map) return next(new Error(`Map ${mapId} not found`));
+        const score = new Score(req.body);
 
-    map.scores.push(score);
+        const map = await Map.findById(mapId);
 
-    await map.save();
+        if (!map) return next(new Error(`Map ${mapId} not found`));
 
-    const data = {
-        message: "Score saved",
-        mapId,
-        score,
-    };
+        map.scores.push(score);
 
-    debug(data);
-    res.json(data);
-});
+        await map.save();
+
+        const data = {
+            message: "Score saved",
+            mapId,
+            score,
+        };
+
+        debug(data);
+        res.json(data);
+    }),
+];
