@@ -8,10 +8,13 @@ function Leaderboard({ mapId, initialScores, scoreAchieved, scoreIsSent }) {
     const [scores, setScores] = useState(initialScores);
 
     useEffect(() => {
-        if (scoreIsSent && scores.length > 2 && scoreAchieved < scores[2].seconds) {
-            getScores(mapId).then((res) => {
-                setScores(res.data.scores);
-            });
+        if (scoreIsSent) {
+            const lastScore = scores[scores.length - 1];
+            if (lastScore && lastScore.seconds > scoreAchieved) {
+                getScores(mapId).then((res) => {
+                    setScores(res.data.scores);
+                });
+            }
         }
     }, [scoreIsSent]);
 
@@ -19,6 +22,7 @@ function Leaderboard({ mapId, initialScores, scoreAchieved, scoreIsSent }) {
         <div className="Leaderboard">
             <h3 className="text-center">Leaderboard: </h3>
             <ol className="leaderboard-list">
+                {scores.length === 0 && <li className="no-marker">No scores yet</li>}
                 {scores.slice(0, 3).map((score) => (
                     <li key={score._id}>
                         {score.playerName} - {secondsToTime(score.seconds)}
